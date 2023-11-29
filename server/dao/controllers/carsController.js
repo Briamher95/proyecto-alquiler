@@ -9,6 +9,7 @@ const createCar = async (req, res) => {
         modelo : req.body.modelo,
         ano: req.body.ano,
         precioPorDia: req.body.precioPorDia,
+        patente : req.body.patente,
         disponible: req.body.disponible
     })
 
@@ -18,7 +19,11 @@ const createCar = async (req, res) => {
     
     }
     catch(err){
-        res.status(400).json({message: err.message})
+        if (err.code === 11000){
+            return res.status(400).json({message: "La patente ya existe"})
+        } else{
+            res.status(400).json({message: err.message})
+        }
     }
 }
 
@@ -70,7 +75,7 @@ const deleteCarById = async (req, res) => {
 
 const updateCarById = async (req, res) => {
     const updates = Object.keys(req.body)
-    const allowedUpdates = ["marca", "modelo", "ano", "precioPorDia", "disponible"]
+    const allowedUpdates = ["marca", "modelo", "ano", "precioPorDia", "patente","disponible"]
 
     const isValid = updates.every((update)=> allowedUpdates.includes(update))
 

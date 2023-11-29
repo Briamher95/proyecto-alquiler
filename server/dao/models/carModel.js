@@ -17,10 +17,14 @@ const CarSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    patente: {
+        type: String,
+        unique: true,
+    },
     disponible: {
         type: Boolean,
         default: true
-    }
+    },
 });
 
 module.exports = mongoose.model('Car', CarSchema);

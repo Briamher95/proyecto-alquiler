@@ -37,9 +37,9 @@ const getAllCars = async (req, res) => {
 //Obtener un auto por su id
 
 const getCarById = async (req, res) => {
-    const {id} = req.params
+    const {cid} = req.params
     try{
-        const carById = await Car.findById(id)
+        const carById = await Car.findById(cid)
         if (!carById){
             return res.status(404).json({message: "No se encontro el auto"})
         }
@@ -50,6 +50,44 @@ const getCarById = async (req, res) => {
     }
 }
 
+//Eliminar el auto
+
+const deleteCarById = async (req, res) => {
+    const {cid} = req.params
+    try{
+        const deletedCar = await Car.findByIdAndDelete(cid)
+        if (!deletedCar){
+            return res.status(404).json({message: "No se pudo elminar ese auto"})
+        }
+        res.json({message:"El auto ha sido eliminado"})
+    }
+    catch (err){
+        res.status(500).json({message:err.message})
+    }
+}
+
+//Updatear las keys de un auto por id
+
+const updateCarById = async (req, res) => {
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ["marca", "modelo", "ano", "precioPorDia", "disponible"]
+
+    const isValid = updates.every((update)=> allowedUpdates.includes(update))
+
+    if (!isValid){
+        return res.status(400).json({message: "Actualizacion no valida , revise los campos"})
+    }
+    try{
+        const carUpdated = await Car.findByIdAndUpdate(req.params.cid, req.body, {new: true, runValidators: true})
+        if (!carUpdated){
+            return res.status(404).json({message: "No se encontro el auto "})
+        }
+        res.json({message: "Se ha actualizado correctamente", car: carUpdated})
+    }
+    catch(err){
+        res.status(400).json({message: err.message})
+    }
+}
 
 
-module.exports = {createCar, getAllCars , getCarById}
+module.exports = {createCar, getAllCars , getCarById, deleteCarById , updateCarById}

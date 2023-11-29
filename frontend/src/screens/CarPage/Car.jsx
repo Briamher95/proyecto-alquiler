@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const Car = () => {
 
@@ -15,10 +16,10 @@ const Car = () => {
     return (
         <>
             {cars.length !== 0 && cars.map((car) => (
-                <div key={car._id}>
+                <Link to={"/car/" + car._id} key={car._id}>
                     <h2>{car.marca} {car.modelo}</h2>
                     <p>{car.ano}</p>
-                </div>)
+                </Link>)
             )}
         </>
     )

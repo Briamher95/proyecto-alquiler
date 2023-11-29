@@ -1,7 +1,9 @@
 import { Route , Routes } from 'react-router-dom'
 import React from 'react'
-import Car from "./screens/Car"
 import './App.css'
+import { Car, CarDetail } from './screens/index'
+
+
 
 function App() {
 
@@ -10,7 +12,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Car/>}/>
-        <Route path="/car/:pid" element={<CarDetail/>}/>
+        <Route path="/car/:cid" element={<CarDetail/>}/>
       </Routes>
 
     </>

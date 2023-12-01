@@ -4,6 +4,7 @@ const cors = require('cors')
 const path = require ("path")
 const carsRouter = require('./routers/carsRouter');
 const sessionRouter = require('./routers/sessionRouter');
+const cookieParser = require('cookie-parser');
 
 
 
@@ -20,7 +21,8 @@ const PORT = process.env.PORT || 9000;
 app.use(cors());
 app.use(express.static(path.join(__dirname + "/public")))
 app.use(express.urlencoded({ extended: true }))
-app.use(express.json());
+app.use(express.json())
+app.use(cookieParser())
 
 
 app.listen(PORT, () => {

@@ -94,5 +94,26 @@ const updateCarById = async (req, res) => {
     }
 }
 
+const rentCar = async (req, res) => {
+    try{
+        const {cid} = req.params
+        const car = await Car.findById(cid)
+        if (!car){
+            return res.status(404).json({message: "No se encontro el auto"})
+        }
+        if(!car.disponible){
+            return res.status(400).json({message: "El auto ya esta alquilado"})
+        }
+        car.rentedBy = req.user._id; // RECORDA! : TENEMOS QUE AGARRAR EL ID DE LA PETICION DEL CLIENTE AL SERVER.
+        car.disponible = false
 
-module.exports = {createCar, getAllCars , getCarById, deleteCarById , updateCarById}
+        const updatedCar = await car.save()
+        res.json({message: "Auto alquilado", car: updatedCar})
+    }
+    catch(err){
+        res.status(500).json({message:"Error en el servidor" , error: err.message})
+    }
+}
+
+
+module.exports = {createCar, getAllCars , getCarById, deleteCarById , updateCarById , rentCar}

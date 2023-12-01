@@ -25,6 +25,10 @@ const CarSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    rentedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 module.exports = mongoose.model('Car', CarSchema);

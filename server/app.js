@@ -3,6 +3,7 @@ const dotenv = require("dotenv")
 const cors = require('cors')
 const path = require ("path")
 const carsRouter = require('./routers/carsRouter');
+const sessionRouter = require('./routers/sessionRouter');
 
 
 
@@ -10,6 +11,7 @@ const carsRouter = require('./routers/carsRouter');
 //CONFIGURACIONES
 dotenv.config();
 const mongoose = require('./config/dbConfig');
+
 
 const app = express();
 const PORT = process.env.PORT || 9000;
@@ -29,3 +31,4 @@ app.listen(PORT, () => {
 //Routers 
 
 app.use('/api/cars', carsRouter)
+app.use("/api/users", sessionRouter)

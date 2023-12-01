@@ -29,6 +29,7 @@ const CarDetail = () => {
                     :
                     <h2>Cargando</h2>
             }
+            
             <Link to={"/"}> Volver al Inicio </Link>
         </>
     )

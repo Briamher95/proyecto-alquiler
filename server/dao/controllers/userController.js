@@ -5,12 +5,13 @@ const createAccessToken = require("../libs/jwt.js");
 
 const register = async (req, res) => {
     try {
-        const { password, username, email } = req.body;
+        const { password, username, email, isAdmin } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             username,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            isAdmin
         });
 
         const savedUser = await newUser.save();

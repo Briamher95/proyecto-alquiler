@@ -1,37 +1,43 @@
 const express = require("express")
 const Car = require("../models/carModel")
+const upload = require("../../config/multerConfig")
 
 //Crear un nuevo auto
-
 const createCar = async (req, res) => {
-    const car = new Car({
-        marca : req.body.marca,
-        modelo : req.body.modelo,
-        ano: req.body.ano,
-        precioPorDia: req.body.precioPorDia,
-        patente : req.body.patente,
-        disponible: req.body.disponible
-    })
-
-    try{
-        const newCar = await car.save();
-        res.status(201).json(newCar);
-    
-    }
-    catch(err){
-        if (err.code === 11000){
-            return res.status(400).json({message: "La patente ya existe"})
-        } else{
-            res.status(400).json({message: err.message})
+    upload.single('image')(req, res, async (err) => { 
+        if (err) {
+            return res.status(500).json({message: err.message});
         }
-    }
+        const car = new Car({
+            marca : req.body.marca,
+            modelo : req.body.modelo,
+            ano: req.body.ano,
+            precioPorDia: req.body.precioPorDia,
+            patente : req.body.patente,
+            disponible: req.body.disponible,
+            image: req.file ? req.file.originalname : null 
+        })
+    
+        try{
+            const newCar = await car.save();
+            res.status(201).json(newCar);
+        
+        }
+        catch(err){
+            if (err.code === 11000){
+                return res.status(400).json({message: "La patente ya existe"})
+            } else{
+                res.status(400).json({message: err.message})
+            }
+        }
+    })
 }
 
 //Obtener todos los autos
 
 const getAllCars = async (req, res) => {
     try{
-        const cars = await Car.find()
+        const cars = await Car.find() 
         res.json(cars)
     }
     catch(err){
@@ -44,7 +50,7 @@ const getAllCars = async (req, res) => {
 const getCarById = async (req, res) => {
     const {cid} = req.params
     try{
-        const carById = await Car.findById(cid)
+        const carById = await Car.findById(cid) 
         if (!carById){
             return res.status(404).json({message: "No se encontro el auto"})
         }
@@ -60,7 +66,7 @@ const getCarById = async (req, res) => {
 const deleteCarById = async (req, res) => {
     const {cid} = req.params
     try{
-        const deletedCar = await Car.findByIdAndDelete(cid)
+        const deletedCar = await Car.findByIdAndDelete(cid) 
         if (!deletedCar){
             return res.status(404).json({message: "No se pudo elminar ese auto"})
         }
@@ -75,7 +81,7 @@ const deleteCarById = async (req, res) => {
 
 const updateCarById = async (req, res) => {
     const updates = Object.keys(req.body)
-    const allowedUpdates = ["marca", "modelo", "ano", "precioPorDia", "patente","disponible"]
+    const allowedUpdates = ["marca", "modelo", "ano", "precioPorDia", "patente","disponible", "image"] 
 
     const isValid = updates.every((update)=> allowedUpdates.includes(update))
 
@@ -93,6 +99,7 @@ const updateCarById = async (req, res) => {
         res.status(400).json({message: err.message})
     }
 }
+
 
 const rentCar = async (req, res) => {
     try{

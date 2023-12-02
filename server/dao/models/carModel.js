@@ -28,7 +28,11 @@ const CarSchema = new mongoose.Schema({
     rentedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    image: {
+        type: String,
+        required : false
+    },
 });
 
 module.exports = mongoose.model('Car', CarSchema);

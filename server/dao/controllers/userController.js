@@ -17,7 +17,7 @@ const register = async (req, res) => {
         const savedUser = await newUser.save();
         savedUser.password = undefined;
 
-        const token = await createAccessToken({ id: savedUser._id })
+        const token = await createAccessToken({ id: savedUser._id , isAdmin: savedUser.isAdmin})
         res.cookie("token", token);
         res.status(201).json({ message: "Usuario creado ", user: savedUser, token });
     }
@@ -42,7 +42,7 @@ const login = async (req, res) => {
         }
 
         userFound.password = undefined;
-        const token = await createAccessToken({ id:userFound._id })
+        const token = await createAccessToken({ id:userFound._id , isAdmin: userFound.isAdmin })
         res.cookie("token", token);
         res.status(201).json({ message: "Usuario Logueado ", user: userFound, token });
     }

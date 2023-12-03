@@ -33,7 +33,12 @@ const Login = () => {
             console.log(data);
             setMessage(data.message)
             if (response.status === 201){
-                navigate("/")
+                if (data.user.isAdmin){
+                    navigate("/controlpanel")
+                } else{
+                    navigate("/")
+                }
+                
             }
         }
 

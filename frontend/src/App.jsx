@@ -1,7 +1,7 @@
 import { Route , Routes } from 'react-router-dom'
 import React from 'react'
 import './App.css'
-import { Car, CarDetail, Login, Register } from './screens/index'
+import { Car, CarDetail, ControlPanel, Login, Register } from './screens/index'
 
 
 
@@ -17,6 +17,7 @@ function App() {
         <Route path="/car/:cid" element={<CarDetail/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
+        <Route path="/controlpanel" element={<ControlPanel/>}/>
       </Routes>
 
     </>

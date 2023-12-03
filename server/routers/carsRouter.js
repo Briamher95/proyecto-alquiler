@@ -16,7 +16,7 @@ carsRouter.post('/', authMiddleware, adminMiddleware,createCar);
 
 
 // endpoint para el coche por id 
-carsRouter.get("/:cid", authMiddleware, getCarById)
+carsRouter.get("/:cid",  getCarById)
 
 
 

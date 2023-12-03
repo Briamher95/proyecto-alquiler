@@ -21,6 +21,7 @@ const Car = () => {
                     <h2>{car.marca} {car.modelo}</h2>
                     <p>{car.ano}</p>
                 </Link>)
+                
             )}
         </>
     )

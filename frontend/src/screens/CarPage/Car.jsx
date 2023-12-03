@@ -17,6 +17,7 @@ const Car = () => {
         <>
             {cars.length !== 0 && cars.map((car) => (
                 <Link to={"/car/" + car._id} key={car._id}>
+                    <img src={`http://localhost:3000/${car.image}`} alt={car.modelo} />
                     <h2>{car.marca} {car.modelo}</h2>
                     <p>{car.ano}</p>
                 </Link>)

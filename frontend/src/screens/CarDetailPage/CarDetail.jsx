@@ -10,6 +10,7 @@ const CarDetail = () => {
         fetch("http://localhost:3000/api/cars/" + cid)
             .then(res => res.json())
             .then((result) => setCarSelect(result))
+            
     }, [])
 
 
@@ -20,6 +21,7 @@ const CarDetail = () => {
             {
                 carSelect ?
                     <div>
+                        {carSelect.image && <img src={`http://localhost:3000/${carSelect.image}`} alt={carSelect.modelo} />}
                         <h2>{carSelect.marca} {carSelect.modelo}</h2>
                         <p>Año: {carSelect.ano}</p>
                         <p>Patente: {carSelect.patente}</p>

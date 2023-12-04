@@ -80,25 +80,25 @@ const deleteCarById = async (req, res) => {
 //Updatear las keys de un auto por id
 
 const updateCarById = async (req, res) => {
-    const updates = Object.keys(req.body)
-    const allowedUpdates = ["marca", "modelo", "ano", "precioPorDia", "patente","disponible", "image"] 
+    const allowedUpdates = ["marca", "modelo", "ano", "precioPorDia", "patente","disponible", "image", "__v"];
 
-    const isValid = updates.every((update)=> allowedUpdates.includes(update))
-
-    if (!isValid){
-        return res.status(400).json({message: "Actualizacion no valida , revise los campos"})
-    }
-    try{
-        const carUpdated = await Car.findByIdAndUpdate(req.params.cid, req.body, {new: true, runValidators: true})
-        if (!carUpdated){
-            return res.status(404).json({message: "No se encontro el auto "})
+    for (let key in req.body) {
+        if (!allowedUpdates.includes(key)) {
+            return res.status(400).json({message: `Hay un error en el campo : ${key} `});
         }
-        res.json({message: "Se ha actualizado correctamente", car: carUpdated})
     }
-    catch(err){
-        res.status(400).json({message: err.message})
+
+    try {
+        const carUpdated = await Car.findByIdAndUpdate(req.params.cid, req.body, {new: true, runValidators: true});
+        if (!carUpdated) {
+            return res.status(404).json({message: "No se encontró el auto."});
+        }
+        res.json({message: "Se ha actualizado correctamente", car: carUpdated});
+    } catch(err) {
+        res.status(400).json({message: err.message});
     }
 }
+
 
 
 const rentCar = async (req, res) => {

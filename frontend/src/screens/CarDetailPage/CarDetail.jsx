@@ -1,8 +1,9 @@
-import { Link, useParams, useNavigate  } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
+import './carDetail.css'
 
 const CarDetail = () => {
-    
+
     const { cid } = useParams()
     const [carSelect, setCarSelect] = useState(null)
     const navigate = useNavigate()
@@ -12,23 +13,24 @@ const CarDetail = () => {
         fetch("http://localhost:3000/api/cars/" + cid)
             .then(res => res.json())
             .then((result) => setCarSelect(result))
-            
+
     }, [])
 
     const handleUpdate = async () => {
+        const {_id, ... updateData} = carSelect
         try {
             const response = await fetch(`http://localhost:3000/api/cars/${cid}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(carSelect),
+                body: JSON.stringify(updateData),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                alert( data.message);
+                alert(data.message);
                 setIsEditing(false);
             } else {
                 alert(data.message);
@@ -46,7 +48,7 @@ const CarDetail = () => {
             const data = await response.json();
 
             if (response.ok) {
-                alert( data.message);
+                alert(data.message);
                 navigate('/');
             } else {
                 alert(data.message);
@@ -57,22 +59,40 @@ const CarDetail = () => {
     };
 
     return (
-        <>
+        <div className="car-detail">
             {
                 carSelect ?
-                    <div>
+                    <>
                         {carSelect.image && <img src={`http://localhost:3000/${carSelect.image}`} alt={carSelect.modelo} />}
                         {isEditing ? (
                             <>
-                                <input type="text" value={carSelect.marca} onChange={(e) => setCarSelect({...carSelect, marca: e.target.value})} />
-                                <input type="text" value={carSelect.modelo} onChange={(e) => setCarSelect({...carSelect, modelo: e.target.value})} />
-                                <input type="number" value={carSelect.ano} onChange={(e) => setCarSelect({...carSelect, ano: e.target.value})} />
-                                <input type="text" value={carSelect.patente} onChange={(e) => setCarSelect({...carSelect, patente: e.target.value})} />
-                                <input type="number" value={carSelect.precioPorDia} onChange={(e) => setCarSelect({...carSelect, precioPorDia: e.target.value})} />
-                                <select value={carSelect.disponible} onChange={(e) => setCarSelect({...carSelect, disponible: e.target.value})}>
-                                    <option value={true}>Sí</option>
-                                    <option value={false}>No</option>
-                                </select>
+                                <label>
+                                    Marca:
+                                    <input type="text" value={carSelect.marca} onChange={(e) => setCarSelect({ ...carSelect, marca: e.target.value })} />
+                                </label>
+                                <label>
+                                    Modelo:
+                                    <input type="text" value={carSelect.modelo} onChange={(e) => setCarSelect({ ...carSelect, modelo: e.target.value })} />
+                                </label>
+                                <label>
+                                    Año:
+                                    <input type="number" value={carSelect.ano} onChange={(e) => setCarSelect({ ...carSelect, ano: e.target.value })} />
+                                </label>
+                                <label>
+                                    Patente:
+                                    <input type="text" value={carSelect.patente} onChange={(e) => setCarSelect({ ...carSelect, patente: e.target.value })} />
+                                </label>
+                                <label>
+                                    Precio por Día:
+                                    <input type="number" value={carSelect.precioPorDia} onChange={(e) => setCarSelect({ ...carSelect, precioPorDia: e.target.value })} />
+                                </label>
+                                <label>
+                                    Disponible:
+                                    <select value={carSelect.disponible} onChange={(e) => setCarSelect({ ...carSelect, disponible: e.target.value === 'true' })}>
+                                        <option value={true}>Sí</option>
+                                        <option value={false}>No</option>
+                                    </select>
+                                </label>
                                 <button onClick={handleUpdate}>Guardar</button>
                                 <button onClick={() => setIsEditing(false)}>Cancelar</button>
                             </>
@@ -87,13 +107,13 @@ const CarDetail = () => {
                                 <button onClick={handleDelete}>Eliminar</button>
                             </>
                         )}
-                    </div>
+                    </>
                     :
                     <h2>Cargando</h2>
             }
-            
+
             <Link to={"/"}> Volver al Inicio </Link>
-        </>
+        </div>
     )
 }
 

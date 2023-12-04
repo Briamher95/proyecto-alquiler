@@ -20,7 +20,7 @@ const createCar = async (req, res) => {
 
         try {
             const newCar = await car.save();
-            res.status(201).json(newCar);
+            res.status(201).json({ message: "Auto creado con éxito", car: newCar });
 
         }
         catch (err) {

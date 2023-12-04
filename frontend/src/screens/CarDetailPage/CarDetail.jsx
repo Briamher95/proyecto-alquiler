@@ -1,6 +1,6 @@
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
-import './carDetail.css'
+import './CarDetail.css'
 
 const CarDetail = () => {
 
@@ -16,6 +16,14 @@ const CarDetail = () => {
 
     }, [])
 
+    useEffect(() => {
+        if (!isEditing) {
+            fetch("http://localhost:3000/api/cars/" + cid)
+                .then(res => res.json())
+                .then((result) => setCarSelect(result))
+        }
+    }, [isEditing]);
+    
     const handleUpdate = async () => {
         const { _id, ...updateData } = carSelect;
         const formData = new FormData();

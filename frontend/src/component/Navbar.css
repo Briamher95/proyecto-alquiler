@@ -1,0 +1,69 @@
+.NavBarContainer {
+    display: flex;
+    height: 90px;
+    padding: 0px 80px 0px 60px;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    border-bottom: 2px solid #EDEFF2;
+    background-color: #F7F8FA;
+}
+
+
+h3 {
+    color: #4D5E80;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+    /* 150% */
+}
+
+.buscador {
+    display: flex;
+    width: auto;
+    align-items: center;
+    position: relative;
+}
+
+.buscador input {
+    height: 40px;
+    width: 20vw;
+    padding-left: 40px;
+    border-radius: 30px;
+    border: none;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.08);
+    font-size: 0.9rem;
+    line-height: 20px;
+    font-family: 'Roboto', sans-serif;
+
+
+}
+
+.buscador ::placeholder {
+    color: #ADB8CC;
+    font-weight: 700;
+
+}
+
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 30px;
+    
+}
+
+.menu i{
+    font-size: 1.5rem;
+    color: #C3CAD9;
+}
+
+.contact{
+
+    color: #6B7A99;
+}

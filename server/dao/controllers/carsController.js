@@ -70,10 +70,10 @@ const deleteCarById = async (req, res) => {
         if (!deletedCar){
             return res.status(404).json({message: "No se pudo elminar ese auto"})
         }
-        res.json({message:"El auto ha sido eliminado"})
+        res.status(201).json({message:"El auto ha sido eliminado"})
     }
     catch (err){
-        res.status(500).json({message:err.message})
+        res.status(500).json({message:"Hubo un error", error: err.message})
     }
 }
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const { createCar, getAllCars, getCarById, deleteCarById, updateCarById, rentCar } = require('../dao/controllers/carsController');
-const { authMiddleware, adminMiddleware  } = require('../dao/controllers/authController');
+const { authMiddleware, adminMiddleware  } = require("../dao/middleware/authController");
 
 
 const carsRouter = express.Router();
@@ -11,7 +11,7 @@ carsRouter.get('/', getAllCars);
 
 
 // endpoint para el nuevo cochechito
-carsRouter.post('/', authMiddleware, adminMiddleware,createCar);
+carsRouter.post('/', createCar);
 
 
 
@@ -21,14 +21,14 @@ carsRouter.get("/:cid",  getCarById)
 
 
 // eliminar el cochecito por su id 
-carsRouter.delete("/:cid",authMiddleware, adminMiddleware, deleteCarById)
+carsRouter.delete("/:cid", deleteCarById)
 
 //Actualizar el cochecito por su id
 
 carsRouter.patch("/:cid", updateCarById)
 
 // Rentar un auto y asociarlo con el id del usuario
-carsRouter.patch("/rent/:cid", authMiddleware , rentCar)
+carsRouter.patch("/rent/:cid", rentCar)
 
 
 module.exports = carsRouter;

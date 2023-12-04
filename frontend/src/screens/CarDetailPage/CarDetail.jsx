@@ -17,14 +17,16 @@ const CarDetail = () => {
     }, [])
 
     const handleUpdate = async () => {
-        const {_id, ... updateData} = carSelect
+        const { _id, ...updateData } = carSelect;
+        const formData = new FormData();
+        for (let key in updateData) {
+            formData.append(key, updateData[key]);
+        }
+
         try {
             const response = await fetch(`http://localhost:3000/api/cars/${cid}`, {
                 method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updateData),
+                body: formData,
             });
 
             const data = await response.json();
@@ -66,6 +68,10 @@ const CarDetail = () => {
                         {carSelect.image && <img src={`http://localhost:3000/${carSelect.image}`} alt={carSelect.modelo} />}
                         {isEditing ? (
                             <>
+                                <label>
+                                    Seleccionar Imagen: 
+                                    <input type="file" onChange={(e) => setCarSelect({ ...carSelect, image: e.target.files[0] })} />
+                                </label>
                                 <label>
                                     Marca:
                                     <input type="text" value={carSelect.marca} onChange={(e) => setCarSelect({ ...carSelect, marca: e.target.value })} />

@@ -68,6 +68,25 @@ const CarDetail = () => {
         }
     };
 
+    const handleRent = async () => {
+        try{
+            const response = await fetch(`http://localhost:3000/api/cars/rent/${cid}`,{
+                method: "PATCH",
+            })
+            const data = await response.json()
+            if (response.ok){
+                alert(data.message)
+                navigate('/')
+            } else {
+                alert(data.message)
+                console.log(data.error)
+            }
+        }
+        catch (error) {
+            console.error("Hubo un error:", error )
+        }
+    }
+
     return (
         <div className="car-detail">
             {
@@ -103,8 +122,8 @@ const CarDetail = () => {
                                 <label>
                                     Disponible:
                                     <select value={carSelect.disponible} onChange={(e) => setCarSelect({ ...carSelect, disponible: e.target.value === 'true' })}>
-                                        <option value={true}>Sí</option>
-                                        <option value={false}>No</option>
+                                        <option style = {{backgroundColor: "green"}} value={true}>Sí</option>
+                                        <option  style = {{ backgroundColor: "red"}}value={false}>No</option>
                                     </select>
                                 </label>
                                 <button onClick={handleUpdate}>Guardar</button>
@@ -119,6 +138,8 @@ const CarDetail = () => {
                                 <p>Disponible: {carSelect.disponible ? 'Sí' : 'No'}</p>
                                 <button onClick={() => setIsEditing(true)}>Editar</button>
                                 <button onClick={handleDelete}>Eliminar</button>
+                                {carSelect.disponible && <button onClick={handleRent}>Alquilar este auto</button> }
+
                             </>
                         )}
                     </>

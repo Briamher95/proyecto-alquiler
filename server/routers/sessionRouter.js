@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login, logout } = require('../dao/controllers/userController');
+const { register, login, logout, profile } = require('../dao/controllers/userController');
 
 
 const sessionRouter = express.Router();

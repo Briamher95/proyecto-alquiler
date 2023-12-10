@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
+import { FaFire } from 'react-icons/fa';
 
-const NavBar = ({ onSearch }) => {
-
-
+const NavBar = ({ search, setSearch}) => {
 
 
     return (
@@ -13,15 +12,16 @@ const NavBar = ({ onSearch }) => {
             <div className='NavBarContainer'>
 
                 <div >
-                    <h3>CarsOnFire</h3>
+                    <h3> <FaFire size={32} color="red" />CarsOnFire</h3>
                 </div>
 
                 <div className='buscador'>
-                    <input type="text" placeholder='Que auto necesitas..' />
+                    <input type="text" placeholder='Que auto necesitas..' value={search}  onChange={(e)=> setSearch(e.target.value)}/>
                 </div>
 
                 <div className='menu'>
-                    <Link className="links" to="/contact"><span>Contact</span></Link>
+                    <Link className="home" to="/"><span>Autos</span></Link>
+                    <Link className="links" to="/contact"><span>Contacto</span></Link>
                     <Link to="/crearAuto" className="links">Crear Auto</Link>
                 </div>
 

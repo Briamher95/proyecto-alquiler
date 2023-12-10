@@ -1,4 +1,4 @@
-.crear-auto {
+.contact {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,7 +9,7 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.crear-auto h1 {
+.contact h3 {
     text-align: center;
     font-size: 2em;
     color: #333;
@@ -18,11 +18,11 @@
     margin-bottom: 20px;
 }
 
-.crear-auto label, .crear-auto input, .crear-auto select, .crear-auto button {
+.contact label, .contact input, .contact textarea, .contact button {
     margin: 10px 0;
 }
 
-.crear-auto input, .crear-auto select, .crear-auto button {
+.contact input, .contact textarea, .contact button {
     width: 100%;
     height: 30px;
     border: none;
@@ -30,13 +30,12 @@
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
-.crear-auto input[type="checkbox"] {
-    width: auto;
-    height: auto;
-
+.contact textarea {
+    height: 100px;
+    resize: none;
 }
 
-.crear-auto button {
+.contact button {
     background-color: #333;
     color: #fff;
     cursor: pointer;

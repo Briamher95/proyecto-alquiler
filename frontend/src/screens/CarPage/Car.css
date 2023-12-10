@@ -1,7 +1,13 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .car{
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    flex-grow: 1;
 
 }
 
@@ -47,4 +53,14 @@
 
 .car-card h2, .car-card p {
     margin: 10px 0;
+}
+
+
+a:link {
+    color: #6B7A99;
+}
+
+
+a:visited {
+    color: #6B7A99;
 }

@@ -1,24 +1,21 @@
 const jwt = require('jsonwebtoken');
 const User = require("../models/userModel.js");
 
-
-
-const authMiddleware  = async (req,res,next) => {
+ // validacion de token
+const authRequire  = async (req,res,next) => {
     try{
         const token = req.cookies.token
         if (!token){
             return res.status(403).json({message: "Por favor log-in"})
         }
-        const verified = jwt.verify(token, process.env.JWT_SECRET)
-        if (!verified){
-            return res.status(403).json({message: "token invalido"})
-        }
+        jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+            if (err){
+                return res.status(403).json({message: "token invalido"})
+            }
 
-        const user = await User.findById(verified.id)
-        if (!user){
-            return res.status(403).json({message: "Usuario no encontrado"})
-        }
-        req.user = user
+            req.user = user //aca esta la magia , agregamos una propiedad .user con los datos del usuario.
+
+        })
         next()
     }
 
@@ -28,21 +25,19 @@ const authMiddleware  = async (req,res,next) => {
 }
 
 
-
-
-const adminMiddleware = async (req, res, next) => {
+const adminRequire = async (req, res, next) => {
     try {
 
         if (!req.user) {
             return res.status(403).json({ message: 'Usuario no autenticado' });
         }
 
-        const user = await User.findById(req.user._id);
-        if (!user) {
+        const userFound = await User.findById(req.user.id);
+        if (!userFound) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
-        if (!user.isAdmin) {
+        if (!userFound.isAdmin) {
             return res.status(403).json({ message: 'No tienes permiso para acceder a esta ruta' });
         }
 
@@ -52,4 +47,4 @@ const adminMiddleware = async (req, res, next) => {
     }
 };
 
-module.exports = {authMiddleware , adminMiddleware}
+module.exports = {authRequire , adminRequire}

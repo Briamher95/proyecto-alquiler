@@ -16,7 +16,6 @@ h3 {
     font-style: normal;
     font-weight: 700;
     line-height: 30px;
-    /* 150% */
 }
 
 .buscador {
@@ -61,9 +60,4 @@ h3 {
 .menu i{
     font-size: 1.5rem;
     color: #C3CAD9;
-}
-
-.contact{
-
-    color: #6B7A99;
 }

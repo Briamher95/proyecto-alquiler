@@ -1,6 +1,5 @@
 const express = require('express');
 const { createCar, getAllCars, getCarById, deleteCarById, updateCarById, rentCar } = require('../dao/controllers/carsController');
-const { authMiddleware, adminMiddleware  } = require("../dao/middleware/authController");
 
 
 const carsRouter = express.Router();

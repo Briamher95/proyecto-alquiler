@@ -106,7 +106,7 @@ const updateCarById = async (req, res) => {
 }
 
 
-
+// Boton para alquilar el auto.
 
 const rentCar = async (req, res) => {
     try {
@@ -118,7 +118,6 @@ const rentCar = async (req, res) => {
         if (!car.disponible) {
             return res.status(400).json({ message: "El auto ya esta alquilado" })
         }
-        car.rentedBy = req.user._id; // RECORDA! : TENEMOS QUE AGARRAR EL ID DE LA PETICION DEL CLIENTE AL SERVER.
         car.disponible = false
 
         const updatedCar = await car.save()

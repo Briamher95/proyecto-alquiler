@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './CrearAuto.css';
+import { NavBar } from '../../component';
 
 const CrearAuto = () => {
     const [carData, setCarData] = useState({
@@ -51,6 +52,7 @@ const CrearAuto = () => {
     };
 
     return (
+        
         <div className="crear-auto">
             <h1>Crear Auto</h1>
             <form onSubmit={handleSubmit}>
@@ -86,8 +88,10 @@ const CrearAuto = () => {
                     <input type="file" name="image" onChange={handleChange} />
                 </label>
                 <button type="submit">Crear</button>
+                <Link to={"/"}> Volver al Inicio </Link>
             </form>
         </div>
+    
     );
 }
 

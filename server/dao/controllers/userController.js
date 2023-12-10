@@ -5,7 +5,12 @@ const createAccessToken = require("../libs/jwt.js");
 
 const register = async (req, res) => {
     try {
+        
         const { password, username, email, isAdmin } = req.body;
+        const userFound = await User.findOne({ email})
+        if (userFound) {
+            return res.status(400).json({ message: "El correo ya esta en uso" });
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             username,
@@ -52,8 +57,17 @@ const login = async (req, res) => {
 };
 
 const logout =  (req, res) => {
-    res.cookie("token","")
+    res.cookie("token","",{expires: new Date (0)})
     return res.status(200).json({ message: "Logout" });
 }
 
-module.exports = { register, login, logout};
+const profile = async (req, res) => {
+    const userFound = await User.findById(req.user.id)
+    
+    if (!userFound) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+    return res.json({ user: userFound })
+}
+
+module.exports = { register, login, logout, profile};
